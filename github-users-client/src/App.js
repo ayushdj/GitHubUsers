@@ -219,7 +219,7 @@ const GitHubUsernames = () => {
   <Fragment>
     <Header/>
     <div className='flex items-center justify-center flex-col'>
-      <h1 className='text-xl text-center'>Search for public repositories by username!</h1>
+      <h1 className='text-xl text-center dark:text-black text-white'>Search for public repositories by username!</h1>
       <div className='flex items-center flex-wrap rounded border bg-gray-200 py-2 px-4 max-w-[500px] xs:min-w-[400px] sm:min-w-[500px] md:min-w-[500px] mx-5 my-5'>
         {usernames.map((username) => (
           <li key={username.id} className='mr-2 my-1 px-2 py-1 rounded-full bg-gray-300 text-gray-700 flex flex-wrap'>
