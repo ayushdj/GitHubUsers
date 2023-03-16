@@ -11,11 +11,13 @@ class GithubDatabaseManager:
     BASE_GITHUB_API_URL = 'https://api.github.com/users/'
 
     def __init__(self):
-        # create a client to connect to the database
-        # db_user = os.getenv('ANALOG_DB_USER')
-        # db_key = os.getenv('ANALOG_DB_PASSWORD')
+
+        # extract environment variables 
+        db_user = os.getenv('ANALOG_DB_USER')
+        db_key = os.getenv('ANALOG_DB_PASSWORD')
+
         client = MongoClient(
-            'mongodb+srv://dhananjai:eD68qSmbQO7A235T@cluster0.3layqrx.mongodb.net/github?retryWrites=true&w=majority',
+            f'mongodb+srv://{db_user}:{db_key}@cluster0.3layqrx.mongodb.net/github?retryWrites=true&w=majority',
             tlsCAFile=certifi.where())
 
         # extract the database we need
@@ -44,20 +46,20 @@ class GithubDatabaseManager:
                 continue
 
             if repo_response.status_code != 200:
-                print(f'Github returned a status code of {repo_response.status_code}, skipping user')
+                print(f'Github returned a status code of {repo_response.status_code}, skipping user {current_username}')
                 continue
 
             if user_response.status_code != 200:
-                print(f'Github returned a status code of {user_response.status_code}, skipping user')
+                print(f'Github returned a status code of {user_response.status_code}, skipping user {current_username}')
                 continue
 
             # extract all the repository names for this user and save the results in a list
             repository_information = [{'repoName': repository['name'], 'repoHtmlUrl': repository['html_url'],
-                                       'repoDescription': repository['description'],
-                                       'languagesUrl': repository['languages_url']} for repository
+                                       'repoDescription': repository['description']} for repository
                                       in repo_response.json()]
 
-            user_information = {'avatarUrl': user_response.json()['avatar_url'], 'name': user_response.json()['name']}
+            user_information = {'avatarUrl': user_response.json()['avatar_url'], 'name': user_response.json()['name'],
+                                'location': user_response.json()['location']}
 
             # Here we are checking to see if the data already exists in the database.
             # If it exists, we must update the repositories list for the existing user.
@@ -89,16 +91,15 @@ class GithubDatabaseManager:
 
 
 def main(usernames: list):
+
+    # make an instance of the class
     github_db_manager = GithubDatabaseManager()
 
     # set the usernames
     github_db_manager.set_usernames(usernames)
-
+    
     # populate the database with the repository names for all users, old and new
     github_db_manager.populate_repo_collection()
-
-    # populate the database with the user information for all users, old and new
-    # github_db_manager.populate_user_collection()
 
 
 if __name__ == '__main__':

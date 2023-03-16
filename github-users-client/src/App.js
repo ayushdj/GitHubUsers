@@ -37,6 +37,7 @@ const GitHubUsernames = () => {
   const [unfoundUsersList, setUnfoundUsersList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  // const [showMoreDisabled, setShowMoreDisabled] = useState()
 
   /**
    * Loads 10 more repository names for a user to show on the screen
@@ -112,6 +113,9 @@ const GitHubUsernames = () => {
       // reset all other information
       setUnfoundUsersList([]);
       setRepoNames([]);
+      setOpenModal(false);
+      setIsClicked([]);
+      setDisplayCount(10);
     });
 
 
@@ -215,6 +219,7 @@ const GitHubUsernames = () => {
   <Fragment>
     <Header/>
     <div className='flex items-center justify-center flex-col'>
+      <h1 className='text-lg text-center'>Search for public repositories by username!</h1>
       <div className='flex items-center flex-wrap rounded border bg-gray-200 py-2 px-4 max-w-[500px] xs:min-w-[400px] sm:min-w-[500px] md:min-w-[500px] mx-5 my-5'>
         {usernames.map((username) => (
           <li key={username.id} className='mr-2 my-1 px-2 py-1 rounded-full bg-gray-300 text-gray-700 flex flex-wrap'>
@@ -230,7 +235,7 @@ const GitHubUsernames = () => {
       <button onClick={handleSubmit} className='bg-transparent dark:hover:bg-blue-500 dark:hover:border-transparent
       text-white font-semibold hover:text-white py-2 px-4 border bg-[#2b3945] dark:hover:text-white
       dark:border-blue-700 dark:text-blue-700 hover:border-transparent rounded 
-      hover:bg-[#2b3945] hover:text-white'>
+      hover:bg-[#2b3945] hover:text-white'  id='send-button'>
         Send &nbsp; <SendIcon />
       </button>
 
@@ -256,14 +261,17 @@ const GitHubUsernames = () => {
       {repoNames.map((each) => (
         <div id={each.username} className='inline-block flex-row' key={each.username}>
           <div className='p-4 max-w-sm'>
-            <div className='rounded-lg h-full bg-[#2b3945] dark:bg-slate-50 p-8 flex-col shadow-lg'>
+            <div className='rounded-lg h-full bg-[#2b3945] dark:bg-slate-50 p-8 flex-col shadow-lg '>
               <div className='flex items-center mb-3'>
-                <div className='w-10 h-10 mt-1 mr-3 inline-flex items-center justify-center rounded-full bg-blue-500 text-white flex-shrink-0'>
+                <div className='w-12 h-12 mt-1 mr-3 inline-flex items-center justify-center rounded-full text-white flex-shrink-0'>
                   <img src={each.userInformation.avatarUrl} alt={"avatar image for" + each.userInformation.name} width="1000" height="1000" className='rounded-full'></img>
                 </div>
                 <div>
                   <h2 className='text-black text-lg font-medium dark:text-black text-white'><a href={'https://github.com/' + each.username} target='_blank' rel='noreferrer'>{each.username} </a></h2>
-                  <span className='text-sm dark:text-black text-white'>{each.userInformation.name}</span>
+                  <div className='flex flex-col'>
+                    <span className='text-sm dark:text-black text-white'>{each.userInformation.name}</span>
+                    {each.userInformation.location !== null ? <span className='text-sm dark:text-black text-white'><i class="fa-solid fa-location-dot"></i> {each.userInformation.location}</span> : <span></span>}
+                  </div>
                 </div>
               </div>
 
@@ -317,11 +325,13 @@ const GitHubUsernames = () => {
                             </List>
                         </div>
                         <div className='flex justify-center mt-2 mb-5'>
-                          <Button variant='outlined' onClick={handleLoadMore} disabled={displayCount >= isClicked.repositoryInformation?.length ? true : false}>
+                          <Button variant='outlined' className='dark:disabled:text-gray-300
+                          dark:disabled:border-gray-300 disabled:text-gray-500 disabled:border-gray-500 border-white text-white dark:border-zinc-800 dark:text-zinc-800' onClick={handleLoadMore} disabled={displayCount >= isClicked.repositoryInformation?.length ? true : false}>
                               Show More
                           </Button>
                           &nbsp;
-                          <Button variant='outlined' onClick={handleLoadLess} disabled={displayCount - 10 <= 0 ? true : false}>
+                          <Button variant='outlined' className='dark:disabled:text-gray-300
+                          dark:disabled:border-gray-300 disabled:text-gray-500 disabled:border-gray-500 border-white text-white dark:border-zinc-800 dark:text-zinc-800' onClick={handleLoadLess} disabled={displayCount - 10 <= 0 ? true : false}>
                               Show Less
                           </Button>
                         </div>

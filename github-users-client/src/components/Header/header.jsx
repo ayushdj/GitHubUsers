@@ -47,7 +47,7 @@ const Header = () => {
       <div className='w-100% shadow-lg py-5 px-2 mb-16 bg-[#2b3945] dark:bg-white'>
         <div className="flex container mx-auto dark:text-black text-white">
           <i className='fa-brands fa-github pt-[6px]'></i>
-          <h1 className="font-bold md:text-l dark:text-black text-white lg:text-xl pl-2">GitHub User Info</h1>
+          <h1 className="font-bold md:text-l dark:text-black text-white lg:text-xl pl-2">GitHub User Public Repositories</h1>
           <div className="ml-auto font-medium md:text-l lg:text-xl">
             <button className="lg:text-md" 
                       onClick={() => handleThemeSwitch()}> {theme==='dark' ? <i className="fa-solid fa-moon"></i> : <i className="fa-solid fa-sun"> </i>}
