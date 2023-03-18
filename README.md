@@ -19,7 +19,7 @@ These commands start up the back-end of the application
 3. Open another terminal window and follow these commands to start the application's front-end
 
 ```
-> cd cd github-users-client
+> cd github-users-client
 > npm run start
 ```
 
