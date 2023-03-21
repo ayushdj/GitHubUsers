@@ -45,12 +45,8 @@ class GithubDatabaseManager:
                 print(f'Failed to fetch data from github')
                 continue
 
-            if repo_response.status_code != 200:
+            if repo_response.status_code != 200 or user_response.status_code != 200:
                 print(f'Github returned a status code of {repo_response.status_code}, skipping user {current_username}')
-                continue
-
-            if user_response.status_code != 200:
-                print(f'Github returned a status code of {user_response.status_code}, skipping user {current_username}')
                 continue
 
             # extract all the repository names for this user and save the results in a list
@@ -61,20 +57,18 @@ class GithubDatabaseManager:
             user_information = {'avatarUrl': user_response.json()['avatar_url'], 'name': user_response.json()['name'],
                                 'location': user_response.json()['location']}
 
-            # Here we are checking to see if the data already exists in the database.
-            # If it exists, we must update the repositories list for the existing user.
-            # Else, it is a new entry in our collection.
+            # Here we are checking to see if the data already exists in the database. 
             user_data = self.get_user(current_username)
+
+            # set the data and update it
+            new_repo_and_user_information = {'$set': {'repositoryInformation': repository_information,
+                                    'userInformation': user_information}}
+            self.repos_collection.update_one({'username': current_username}, new_repo_and_user_information, upsert=True)
+
+            # let the user know if we updated the data or inserted new data.
             if user_data:
-                new_repo_and_user_information = {'$set': {'repositoryInformation': repository_information,
-                                                 'userInformation': user_information}}
-                self.repos_collection.update_one({'username': current_username}, new_repo_and_user_information)
                 print(f'Updated repository and user information for username = {current_username}')
             else:
-                new_repo_and_user_information = {'username': current_username,
-                                                 'repositoryInformation': repository_information,
-                                                 'userInformation': user_information}
-                self.repos_collection.insert_one(new_repo_and_user_information)
                 print(f'Inserted new data for username = {current_username}')
 
     def set_usernames(self, all_usernames: list) -> None:

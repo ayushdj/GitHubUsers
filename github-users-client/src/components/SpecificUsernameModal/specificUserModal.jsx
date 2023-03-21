@@ -49,26 +49,23 @@ const SpecificUserModal = ({isClicked, handleCloseModal, displayCount, setDispla
                         <List id='modal-modal-description' sx={{ mt: 2 }} >
                         {
                             isClicked.repositoryInformation?.length === 0 ? 
-                            
                             <div className='flex flex-col mb-5 justify-center items-center text-center'>
-                            <div>
-                                <i class='fa-solid fa-triangle-exclamation dark:text-black text-white fa-3x'></i>
+                                <div>
+                                    <i class='fa-solid fa-triangle-exclamation dark:text-black text-white fa-3x'></i>
+                                </div>
+                                <div className='dark:text-black text-white'>
+                                    No public repositories to display
+                                </div>
                             </div>
-                            <div className='dark:text-black text-white'>
-                                No public repositories to display
-                            </div>
-                            </div>
-                            
                             : <></>
                         }
                         {isClicked.repositoryInformation?.slice(0, displayCount).map((repoInfo, idx) => (
                             <div className='flex flex-row pb-5 justify-between' key={idx}>
                                 <div className='xxs:text-xs xxs:truncate xs:text-sm md:text-lg dark:text-black text-white'>
-                                <div className='flex flex-col'>
-                                    <div className='font-bold font-mono underline underline-offset-4'><a rel="noreferrer" target="_blank" href={repoInfo.repoHtmlUrl}>{idx + 1}. {repoInfo.repoName}</a></div>
-                                    {repoInfo.repoDescription === null ? <div className='text-sm max-w-[50%]'>*No Description*</div> : <div className='text-sm max-w-[50%]'>Description: {repoInfo.repoDescription}</div>}                                      
-                                </div>
-                                
+                                    <div className='flex flex-col'>
+                                        <div className='font-bold font-mono underline underline-offset-4'>{idx + 1}. {repoInfo.repoName}</div>
+                                        {repoInfo.repoDescription === null ? <div className='text-sm max-w-[50%]'>*No Description*</div> : <div className='text-sm max-w-[50%]'>Description: {repoInfo.repoDescription}</div>}                                      
+                                    </div>
                                 </div>
                                 <div>
                                 <a rel="noreferrer" className='dark:text-black text-white' target="_blank" href={repoInfo.repoHtmlUrl}><i className='fa-sharp fa-solid fa-up-right-from-square'></i></a>
@@ -79,12 +76,12 @@ const SpecificUserModal = ({isClicked, handleCloseModal, displayCount, setDispla
                     </div>
                     <div className='flex justify-center mt-2 mb-5'>
                         <Button variant='outlined' className='dark:disabled:text-gray-300
-                        dark:disabled:border-gray-300 disabled:text-gray-500 disabled:border-gray-500 border-white text-white dark:border-zinc-800 dark:text-zinc-800' onClick={handleLoadMore} disabled={displayCount >= isClicked.repositoryInformation?.length ? true : false}>
+                            dark:disabled:border-gray-300 disabled:text-gray-500 disabled:border-gray-500 border-white text-white dark:border-zinc-800 dark:text-zinc-800' onClick={handleLoadMore} disabled={displayCount >= isClicked.repositoryInformation?.length ? true : false}>
                             Show More
                         </Button>
                         &nbsp;
                         <Button variant='outlined' className='dark:disabled:text-gray-300
-                        dark:disabled:border-gray-300 disabled:text-gray-500 disabled:border-gray-500 border-white text-white dark:border-zinc-800 dark:text-zinc-800' onClick={handleLoadLess} disabled={displayCount - 10 <= 0 ? true : false}>
+                            dark:disabled:border-gray-300 disabled:text-gray-500 disabled:border-gray-500 border-white text-white dark:border-zinc-800 dark:text-zinc-800' onClick={handleLoadLess} disabled={displayCount - 10 <= 0 ? true : false}>
                             Show Less
                         </Button>
                     </div>
@@ -93,6 +90,5 @@ const SpecificUserModal = ({isClicked, handleCloseModal, displayCount, setDispla
         </div>
     )
 }
-
 
 export default SpecificUserModal;

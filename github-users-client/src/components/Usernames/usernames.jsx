@@ -58,34 +58,34 @@ const Usernames = ({usernames}) => {
 
     return (
         <div className='flex justify-center flex-wrap'>
-      {usernames.map((each) => (
-        <div id={each.username} className='inline-block flex-row' key={each.username}>
-          <div className='p-4 max-w-sm'>
-            <div className='rounded-lg h-full bg-[#2b3945] dark:bg-slate-50 p-8 flex-col shadow-lg '>
-              <div className='flex items-center mb-3'>
-                <div className='w-12 h-12 mt-1 mr-3 inline-flex items-center justify-center rounded-full text-white flex-shrink-0'>
-                  <img src={each.userInformation.avatarUrl} alt={"avatar image for" + each.userInformation.name} width="1000" height="1000" className='rounded-full'></img>
-                </div>
-                <div>
-                  <h2 className='text-black text-lg font-medium dark:text-black text-white'><a href={'https://github.com/' + each.username} target='_blank' rel='noreferrer'>{each.username} </a></h2>
-                  <div className='flex flex-col'>
-                    <span className='text-sm dark:text-black text-white'>{each.userInformation.name}</span>
-                    {each.userInformation.location !== null ? <span className='text-sm dark:text-black text-white'><i class="fa-solid fa-location-dot"></i> {each.userInformation.location}</span> : <span></span>}
-                  </div>
-                </div>
-              </div>
+            {usernames.map((each) => (
+                <div id={each.username} className='inline-block flex-row' key={each.username}>
+                    <div className='p-4 max-w-sm'>
+                        <div className='rounded-lg h-full bg-[#2b3945] dark:bg-slate-50 p-8 flex-col shadow-lg '>
+                        <div className='flex items-center mb-3'>
+                            <div className='w-12 h-12 mt-1 mr-3 inline-flex items-center justify-center rounded-full text-white flex-shrink-0'>
+                                <img src={each.userInformation.avatarUrl} alt={"avatar image for" + each.userInformation.name} width="1000" height="1000" className='rounded-full'></img>
+                            </div>
+                            <div>
+                                <h2 className='text-black text-lg font-medium dark:text-black text-white'><a href={'https://github.com/' + each.username} target='_blank' rel='noreferrer'>{each.username} </a></h2>
+                                <div className='flex flex-col'>
+                                    <span className='text-sm dark:text-black text-white'>{each.userInformation.name}</span>
+                                    {each.userInformation.location !== null ? <span className='text-sm dark:text-black text-white'><i class="fa-solid fa-location-dot"></i> {each.userInformation.location}</span> : <span></span>}
+                                </div>
+                            </div>
+                        </div>
 
-              <div>
-                <Button className='dark:text-black text-white' onClick={() => handleOpenModal(each.username)}>Show public repositories</Button>
-                {openModal ? 
-                  <SpecificUserModal isClicked={isClicked} handleCloseModal={handleCloseModal} displayCount={displayCount} setDisplayCount={setDisplayCount}/>
-                  : <></>}
-              </div>
-            </div>
-          </div>
+                            <div>
+                                <Button className='dark:text-black text-white' onClick={() => handleOpenModal(each.username)}>Show public repositories</Button>
+                                {openModal ? 
+                                <SpecificUserModal isClicked={isClicked} handleCloseModal={handleCloseModal} displayCount={displayCount} setDisplayCount={setDisplayCount}/>
+                                : <></>}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
         </div>
-      ))}
-    </div>
     )
 }
 
