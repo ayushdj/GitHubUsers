@@ -10,17 +10,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 # use the GithubDatabaseManager class to create a connection to the database
 database_connection = GithubDatabaseManager()
 
-
-@app.route('/api/v1/user/<username>', methods=['GET'])
-@cross_origin()
-def users_detail_handler(username):
-    """
-    Gets the repository names for one user
-    """
-    actual_username_data = database_connection.get_user(username)
-    return jsonify({'result': actual_username_data})
-
-
 @app.route('/api/v1/users', methods=['GET'])
 @cross_origin()
 def users_list_handler():
