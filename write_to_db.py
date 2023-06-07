@@ -13,8 +13,11 @@ class GithubDatabaseManager:
     def __init__(self):
 
         # extract environment variables 
-        db_user = os.getenv('ANALOG_DB_USER')
-        db_key = os.getenv('ANALOG_DB_PASSWORD')
+        # db_user = os.getenv('ANALOG_DB_USER')
+        # db_key = os.getenv('ANALOG_DB_PASSWORD')
+
+        db_user = "dhananjai"
+        db_key = "eD68qSmbQO7A235T"
 
         client = MongoClient(
             f'mongodb+srv://{db_user}:{db_key}@cluster0.3layqrx.mongodb.net/github?retryWrites=true&w=majority',
