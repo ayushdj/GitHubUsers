@@ -3,7 +3,7 @@ from flask.helpers import send_from_directory
 from flask_cors import CORS, cross_origin
 from write_to_db import GithubDatabaseManager
 
-app = Flask(__name__, static_folder='github-users-client/build', static_url_path='')
+app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -46,3 +46,4 @@ def serve():
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=5000)
+    # app.run()
